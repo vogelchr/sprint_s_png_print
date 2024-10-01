@@ -62,12 +62,11 @@ if __name__ == '__main__':
     if img.mode != '1':
         img = img.convert('1')
 
-    tty = serial.Serial(args.port.as_posix(), args.baud)
+    tty = serial.Serial(args.port.as_posix(), args.baud, rtscts=True)
 
     if args.cut_lines:
-        white_black_lines(tty, 16)
+        white_black_lines(tty, 20)
         white_black_lines(tty, 1, True)
-        white_black_lines(tty, 4)
 
     for y in range(img.size[1]):
         write_img_line(tty, img, y)
@@ -75,6 +74,5 @@ if __name__ == '__main__':
             write_img_line(tty, img, y)
 
     if args.cut_lines:
-        white_black_lines(tty, 4)
         white_black_lines(tty, 1, True)
         white_black_lines(tty, 96)
